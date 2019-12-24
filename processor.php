@@ -6,7 +6,8 @@ use github_com\xiclonn\php\etp\err as err;
 function processor () {
 	$data = file_get_contents ("data");
 	if ($data === false) {
-		return new err\Error ("Bug detected: possibly broken dependency; ref: 0.", err\Error ("Unable to load data."));
+		return new err\Error ("Bug detected: possibly broken dependency; ref: 0.",
+			err\Error ("Unable to load data."));
 	}
 
 	$data = trim ($data);
@@ -24,19 +25,23 @@ function processor () {
 	$doneX = shuffle ($data);
 
 	if ($doneX === false) {
-		return new err\Error ("Bug detected: possibly broken dependency; ref: 1.", err\Error ("Unable to shuffle array."));
+		return new err\Error ("Bug detected: possibly broken dependency; ref: 1.",
+			err\Error ("Unable to shuffle array."));
 	}
 
 	$doneY = file_put_contents ("result", "");
 	if ($doneY === false) {
-		return new err\Error ("Bug detected: possibly broken dependency; ref: 2.", err\Error ("Unable to clear result file."));
+		return new err\Error ("Bug detected: possibly broken dependency; ref: 2.",
+			err\Error ("Unable to clear result file."));
 	}
 
 	foreach ($data as $word) {
 		$output = $word . "\n";
 		$doneZ = file_put_contents ("result", $output, FILE_APPEND);
 		if ($doneZ === false) {
-			return new err\Error ("Bug detected: possibly broken dependency; ref: 3.", err\Error ("Unable to write word to file."));
+			return new err\Error ("Bug detected: possibly broken " .
+				"dependency; ref: 3.",
+				err\Error ("Unable to write word to file."));
 		}
 	}
 
