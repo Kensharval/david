@@ -6,21 +6,28 @@ require_once "github.com/xiclonn/php/etp/err/v1/error.php";
 use github_com\xiclonn\php\etp\err as err;
 
 function fetchWord () {
-	if (! file_exists ("result")) {
-		$respX = processor ();
-		if ($respX != err\Error::Nil ()) {
-			return ["", "", err\Error ("Dependency failure; ref: 0.", $respX)];
-		}
+	beginning:
+
+	$fileContent = file_get_contents ("result");
+	if ($fileContent === false) {
+		return ["", err\Error ("Unable to load result file.", $respX)];
 	}
 
-	$size = filesize ("result")
-	if ($size === false) {
-		return ["", "", err\Error ("Dependency failure; ref: 1.")];
-	}
-
-	if ($size == 0) {
+	if ($fileContent == "") {
 		$respY = processor ();
 		if ($respY != err\Error::Nil ()) {
-			return ["", "", err\Error ("Dependency failure; ref: 2.", $respY)];
+			return ["", err\Error ("Dependency failure; ref: 2.", $respY)];
 		}
+
+		goto beginning;
 	}
+
+	$result = explode ("\n", $fileContent, 2);
+
+	$respZ = file_put_contents ("result", $result [1]);
+	if ($respZ === false) {
+		return ["", err\Error ("Unable to save the remaining result.", $respZ)];
+	}
+
+	return [$result [0], err\Error::Nil ()];
+}
