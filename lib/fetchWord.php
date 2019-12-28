@@ -8,7 +8,7 @@ use github_com\xiclonn\php\etp\err as err;
 function fetchWord () {
 	beginning:
 
-	$fileContent = file_get_contents ("result");
+	$fileContent = file_get_contents ("db/result");
 	if ($fileContent === false) {
 		return ["", err\Error ("Unable to load result file.", $respX)];
 	}
@@ -24,7 +24,7 @@ function fetchWord () {
 
 	$result = explode ("\n", $fileContent, 2);
 
-	$respZ = file_put_contents ("result", $result [1]);
+	$respZ = file_put_contents ("db/result", $result [1]);
 	if ($respZ === false) {
 		return ["", err\Error ("Unable to save the remaining result.", $respZ)];
 	}

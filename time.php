@@ -10,10 +10,15 @@ if (! is_numeric ($_GET ["time"])) {
 	exit;
 }
 
-$respX = file_put_contents ("db/time", $_GET ["time"])
-if ($respX === false) {
-	header ("Location: index.php?response=e3"); // Unable to update time.
+if (floor ($_GET ["time"]) < 4) {
+	header ("Location: index.php?response=e3"); // Time too short.
 	exit;
 }
 
-header ("Location: index.php?response=success");
+$respX = file_put_contents ("db/time", floor ($_GET ["time"]));
+if ($respX === false) {
+	header ("Location: index.php?response=e4"); // Unable to update time.
+	exit;
+}
+
+header ("Location: index.php");

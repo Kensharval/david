@@ -4,7 +4,7 @@ require_once "github.com/xiclonn/php/etp/err/v1/error.php";
 use github_com\xiclonn\php\etp\err as err;
 
 function processor () {
-	$data = file_get_contents ("data");
+	$data = file_get_contents ("db/data");
 	if ($data === false) {
 		return new err\Error ("Bug detected: possibly broken dependency; ref: 0.",
 			err\Error ("Unable to load data."));
@@ -29,7 +29,7 @@ function processor () {
 			err\Error ("Unable to shuffle array."));
 	}
 
-	$doneY = file_put_contents ("result", "");
+	$doneY = file_put_contents ("db/result", "");
 	if ($doneY === false) {
 		return new err\Error ("Bug detected: possibly broken dependency; ref: 2.",
 			err\Error ("Unable to clear result file."));
@@ -37,7 +37,7 @@ function processor () {
 
 	foreach ($data as $word) {
 		$output = $word . "\n";
-		$doneZ = file_put_contents ("result", $output, FILE_APPEND);
+		$doneZ = file_put_contents ("db/result", $output, FILE_APPEND);
 		if ($doneZ === false) {
 			return new err\Error ("Bug detected: possibly broken " .
 				"dependency; ref: 3.",
