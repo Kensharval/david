@@ -10,7 +10,7 @@ if (! is_numeric ($_GET ["time"])) {
 	exit;
 }
 
-if (floor ($_GET ["time"]) < 4) {
+if (floor ($_GET ["time"]) < 2) {
 	header ("Location: index.php?response=e3"); // Time too short.
 	exit;
 }
