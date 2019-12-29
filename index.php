@@ -9,10 +9,11 @@ use github_com\xiclonn\php\etp\err as err;
 <html lang='en-GB'>
 <head>
 	<title>Qupie</title>
+	<link rel="stylesheet" href="index.css" />
 </head>
 <body>
 	<header>
-		<span>qupie</span>
+		<span id="title">Qupie</span>
 		<span id="time" onclick='loadTimeEditInterface ()'></span>
 	</header>
 
@@ -40,15 +41,22 @@ use github_com\xiclonn\php\etp\err as err;
 <section>Error: <span>{$wordX [1]->Descrp ()}</span></section>
 			";
 		} else {
+			if (mb_strlen ($word2 [0]) > mb_strlen ($word1 [0])) {
+				$tempWord = $word1 [0];
+				$word1 [0] = $word2 [0];
+				$word2 [0] = $tempWord;
+			}
+			
 			echo "
-<section>
-	<div>{$word1 [0]}</div>
-	<div>{$word2 [0]}</div>
+<section id='word'>
+	<span class='word' id='word1'>{$word1 [0]}</span>
+	
+	<span class='word' id='word2'>{$word2 [0]}</span>
 </section>
 
-<section>
-	<button type='button' onclick='wait ();' id='waitButton'>Wait</a>
-	<button type='button' onclick='go ();'>Go</a>
+<section id='button'>
+	<button class='button' type='button' onclick='wait ();' id='waitButton'>Wait</a>
+	<button class='button' type='button' onclick='go ();' id='goButton'>Go</a>
 </section>
 			";
 		}
@@ -59,82 +67,4 @@ use github_com\xiclonn\php\etp\err as err;
 </body>
 </html>
 
-<script type="text/javascript">
-	var time = <?php echo $time; ?>;
-	var counting = true;
-	var timeEditInterface = "<?php echo str_replace ("\n", "", "
-<section>
-	<p>Update display time</p>
-
-	<div>
-		<p>{$time}<br />
-			<span>seconds</span></p>
-		<p>to</p>
-		<p><form action='time.php' method='GET' id='timeUpdateForm'>
-			<input name='time' type='number' /></form><br />
-			<span>seconds</span></p>
-	</div>
-
-	<div>
-		<button type='button' onclick='go ();'>Cancel</button>
-		<button type='submit' form='timeUpdateForm'>Update</button>
-	</div>
-</section>
-	"); ?> ";
-
-	function pauseCounting () {
-		counting = false;
-	}
-
-	function resmeCounting () {
-		counting = true;
-	}
-
-	function loadTimeEditInterface () {
-		pauseCounting ();
-		document.getElementById ("main").innerHTML = timeEditInterface;
-	}
-
-	function wait () {
-		pauseCounting ();
-		document.getElementById ("waitButton").innerHTML = "Resume";
-		document.getElementById ("waitButton").setAttribute ("onclick", "cntu ();");
-	}
-
-	function cntu () {
-		resmeCounting ();
-		document.getElementById ("waitButton").innerHTML = "Wait";
-		document.getElementById ("waitButton").setAttribute ("onclick", "wait ();");
-	}
-
-	function go () {
-		window.location.replace (window.location.href);
-	}
-
-	document.getElementById ("time").innerHTML = time;
-
-	//document.write (time);
-
-	function countingActvity () {
-	//	document.write (time)
-	//	document.write (counting)
-		//while (true) {
-			if (time == 0) {
-				go ();
-				return
-				//break;
-			}
-
-			if (counting == false) {
-				setTimeout (countingActvity, 400);
-				//continue;
-			} else {
-				time = time - 1;
-				document.getElementById ("time").innerHTML = time;
-				setTimeout (countingActvity, 1000);
-			}
-		
-		//}
-	}
-	setTimeout (countingActvity, 1000);
-</script>
+<?php require_once 'index.js.php'; ?>
