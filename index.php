@@ -8,7 +8,7 @@ use github_com\xiclonn\php\etp\err as err;
 <!DOCTYPE html>
 <html lang='en-GB'>
 <head>
-	<title>Qupie</title>
+	<title>Qupie | A pet project</title>
 	<link rel="stylesheet" href="index.css" />
 </head>
 <body>
@@ -46,7 +46,7 @@ use github_com\xiclonn\php\etp\err as err;
 				$word1 [0] = $word2 [0];
 				$word2 [0] = $tempWord;
 			}
-			
+
 			echo "
 <section id='word'>
 	<span class='word' id='word1'>{$word1 [0]}</span>
